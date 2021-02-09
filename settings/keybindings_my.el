@@ -1,4 +1,5 @@
-﻿(setq make-backup-files nil)
+﻿;; hey
+(setq make-backup-files nil)
 (setq create-lockfiles nil)
 (setq default-directory "e:/")
 

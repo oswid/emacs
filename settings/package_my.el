@@ -27,35 +27,17 @@
 (use-package all-the-icons
   :ensure t)
 
-(use-package rjsx-mode
-  :ensure t
-  :mode ("\\.js\\'"
-         "\\.jsx\\'")
-  :config
-  (setq js2-mode-show-parse-errors t
-	js2-mode-show-strict-warnings nil
-	js2-basic-offset 2
-	js-indent-level 2)
-  (electric-pair-mode 1))
-
-;; (use-package tide
+;; (use-package rjsx-mode
 ;;   :ensure t
-;;   :after (typescript-mode company flycheck)
-;;   :hook ((typescript-mode . tide-setup)
-;;          (typescript-mode . tide-hl-identifier-mode)
-;;          (before-save . tide-format-before-save)))
+;;   :mode ("\\.js\\'"
+;;          "\\.jsx\\'")
+;;   :config
+;;   (setq js2-mode-show-parse-errors t
+;; 	js2-mode-show-strict-warnings nil
+;; 	js2-basic-offset 2
+;; 	js-indent-level 2)
+;;   (electric-pair-mode 1))
 
-;; (use-package web-mode
-;;   :ensure t)
-
-;; (require 'web-mode)
-;; (add-to-list 'auto-mode-alist '("\\.tsx\\'" . web-mode))
-;; (add-hook 'web-mode-hook
-;;           (lambda ()
-;;             (when (string-equal "tsx" (file-name-extension buffer-file-name))
-;;               (setup-tide-mode))))
-;; ;; enable typescript-tslint checker
-;; (add-hook 'typescript-tslint 'web-mode)
 
 (use-package prettier-js
   :ensure t
@@ -123,7 +105,7 @@
   :ensure t
   :init
       (setq avy-keys '(?a ?o ?u ?u ?i ?d ?h ?t ?n ?s))
-  :bind ("M-C-l" . avy-goto-char))
+      )
 
 (use-package avy-zap
   :ensure t)
@@ -143,39 +125,31 @@
 
 (use-package emmet-mode
   :ensure t
-  :bind ("TAB" . emmet-expand-line)
+  :bind ("@" . emmet-expand-line)
   :config
-  (add-hook 'rjsx-mode 'emmet-mode)
+  (add-hook 'web-mode 'emmet-mode)
   (setq emmet-expand-jsx-className? t))
 
 
-;; ======== typescript
-
-;;; typescript.el --- typescript support
-;;; Commentary:
-;;; Code:
 
 (use-package flycheck
   :ensure t
   :config
   (add-hook 'typescript-mode-hook 'flycheck-mode))
 
-(defun setup-tide-mode ()
-  (interactive)
-  (tide-setup)
-  (flycheck-mode +1)
-  (setq flycheck-check-syntax-automatically '(save mode-enabled))
-  (eldoc-mode +1)
-  (tide-hl-identifier-mode +1)
-  (company-mode +1))
+;; (defun setup-tide-mode ()
+;;   (interactive)
+;;   (tide-setup)
+;;   (flycheck-mode +1)
+;;   (setq flycheck-check-syntax-automatically '(save mode-enabled))
+;;   (eldoc-mode +1)
+;;   (tide-hl-identifier-mode +1)
+;;   (company-mode +1))
 
-(use-package company
-  :ensure t
-  :config
-  (setq company-show-numbers t)
-  (setq company-tooltip-align-annotations t)
-  (setq company-tooltip-flip-when-above t)
-  (global-company-mode))
+;; (use-package company
+;;   :ensure t
+;;   :init
+;;   (add-hook 'after-init-hook 'global-company-mode))
 
 (use-package company-quickhelp
   :ensure t
@@ -184,45 +158,44 @@
   (use-package pos-tip
     :ensure t))
 
-(use-package web-mode
-  :ensure t
-  :mode (("\\.html?\\'" . web-mode)
-         ("\\.tsx\\'" . web-mode)
-         ("\\.jsx\\'" . web-mode))
-  :config
-  (setq web-mode-markup-indent-offset 2
-        web-mode-css-indent-offset 2
-        web-mode-code-indent-offset 2
-        web-mode-block-padding 2
-        web-mode-comment-style 2
+;; (use-package web-mode
+;;   :ensure t
+;;   :mode (("\\.html?\\'" . web-mode)
+;;          ("\\.tsx\\'" . web-mode)
+;;          ("\\.jsx\\'" . web-mode))
+;;   :config
+;;   (setq web-mode-markup-indent-offset 2
+;;         web-mode-css-indent-offset 2
+;;         web-mode-code-indent-offset 2
+;;         web-mode-block-padding 2
+;;         web-mode-comment-style 2
 
-        web-mode-enable-css-colorization t
-        web-mode-enable-auto-pairing t
-        web-mode-enable-comment-keywords t
-        web-mode-enable-current-element-highlight t
-        )
-  (add-hook 'web-mode-hook
-            (lambda ()
-              (when (string-equal "tsx" (file-name-extension buffer-file-name))
-		(setup-tide-mode))))
-  (flycheck-add-mode 'typescript-tslint 'web-mode))
+;;         web-mode-enable-css-colorization t
+;;         web-mode-enable-auto-pairing t
+;;         web-mode-enable-comment-keywords t
+;;         web-mode-enable-current-element-highlight t
+;;         )
+;;   (add-hook 'web-mode-hook
+;;             (lambda ()
+;;               (when (string-equal "tsx" (file-name-extension buffer-file-name))
+;; 		(setup-tide-mode))))
+;;   (flycheck-add-mode 'typescript-tslint 'web-mode))
 
-(use-package typescript-mode
-  :ensure t
-  :config
-  (setq typescript-indent-level 2)
-  (add-hook 'typescript-mode #'subword-mode))
+;; (use-package typescript-mode
+;;   :ensure t
+;;   :config
+;;   (setq typescript-indent-level 2)
+;;   (add-hook 'typescript-mode #'subword-mode))
 
-(use-package tide
-  :init
-  :ensure t
-  :after (typescript-mode company flycheck)
-  :hook ((typescript-mode . tide-setup)
-         (typescript-mode . tide-hl-identifier-mode)
-         (before-save . tide-format-before-save)))
+;; (use-package tide
+;;   :init
+;;   :ensure t
+;;   :after (typescript-mode company flycheck)
+;;   :hook ((typescript-mode . tide-setup)
+;;          (typescript-mode . tide-hl-identifier-mode)
+;;          (before-save . tide-format-before-save)))
 
-(provide 'typescript)
-;;; typescript.el ends here
+;; (provide 'typescript)
 
 
 (use-package evil
@@ -238,5 +211,122 @@
   :config
       (winum-mode))
 
+
+
 (use-package magit
   :ensure t)
+
+(defun efs/lsp-mode-setup ()
+  (setq lsp-headerline-breadcrumb-segments '(path-up-to-project file symbols))
+  (lsp-headerline-breadcrumb-mode))
+
+
+
+(setq lsp-keymap-prefix "C-l")
+
+(use-package lsp-mode
+  :hook (
+	   ;; bind lsp to the development modes I'm interested in.
+	   (web-mode . lsp-deferred)
+	   (lsp-mode . lsp-enable-which-key-integration))
+  :init
+  (setq lsp-enable-completion-at-point t)
+  (setq lsp-enable-indentation t)
+  (setq lsp-enable-on-type-formatting t)
+  :commands lsp lsp-deferred)
+
+(use-package lsp-ivy :commands lsp-ivy-workspace-symbol)
+(use-package lsp-treemacs :commands lsp-treemacs-errors-list)
+
+(use-package which-key
+  :config
+  (which-key-mode))
+
+
+
+
+(use-package tide
+  :hook (
+       (web-mode . setup-tide-mode)
+	 )
+  :config
+  (defun setup-tide-mode ()
+    (interactive)
+    (tide-setup)
+    (eldoc-mode +1)
+    (company-mode +1)
+    (local-set-key [f1] 'tide-documentation-at-point))
+  (setq company-tooltip-align-annotations t)
+  (setq tide-sort-completions-by-kind t)
+)
+
+(use-package web-mode
+  :ensure t
+  :mode (("\\.js\\'" . web-mode)
+	   ("\\.jsx\\'" . web-mode)
+	   ("\\.ts\\'" . web-mode)
+	   ("\\.tsx\\'" . web-mode)
+	   ("\\.html\\'" . web-mode)
+	   ("\\.vue\\'" . web-mode)
+	   ("\\.json\\'" . web-mode))
+  :commands web-mode
+  :config
+  (setq company-tooltip-align-annotations t)
+  (setq web-mode-markup-indent-offset 2)
+  (setq web-mode-css-indent-offset 2)
+  (setq web-mode-code-indent-offset 2)
+  (setq web-mode-enable-part-face t)
+  (setq web-mode-content-types-alist
+	  '(("jsx" . "\\.js[x]?\\'")))
+  )
+
+
+
+;; (defun efs/lsp-mode-setup ()
+;;   (setq lsp-headerline-breadcrumb-segments '(path-up-to-project file symbols))
+;;   (lsp-headerline-breadcrumb-mode))
+
+;; (use-package lsp-mode
+;;   :commands (lsp lsp-deferred)
+;;   :hook (lsp-mode . efs/lsp-mode-setup)
+;;   :init
+;;   (setq lsp-keymap-prefix "c-c l")  ;; or 'c-l', 's-l'
+;;   :config
+;;   (lsp-enable-which-key-integration t))
+
+
+;; (use-package lsp-ui
+;;   :hook (lsp-mode . lsp-ui-mode)
+;;   :custom
+;;   (lsp-ui-doc-position 'bottom))
+
+
+;; (use-package lsp-treemacs
+;;   :after lsp)
+
+
+;; ;; (use-package lsp-ivy)
+
+;; (use-package typescript-mode
+;;   :mode "\\.ts\\'"
+;;   :hook (typescript-mode . lsp-deferred)
+;;   :config
+;;   (setq typescript-indent-level 2))
+
+
+
+;; (use-package company
+;;   :after lsp-mode
+;;   :hook (lsp-mode . company-mode)
+;;   :bind (:map company-active-map
+;;          ("<tab>" . company-complete-selection))
+;;         (:map lsp-mode-map
+;;          ("<tab>" . company-indent-or-complete-common))
+;;   :custom
+;;   (company-minimum-prefix-length 1)
+;;   (company-idle-delay 0.0))
+
+;; (use-package company-box
+;;   :hook (company-mode . company-box-mode))
+
+
