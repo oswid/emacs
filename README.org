@@ -21,7 +21,7 @@ add all file to home path
 интересный функционал: 
 
 
-- [x] m- mark 
+- [ ]  m- mark 
 - ` - to mark 
 - */# - forward/backward to word 
 - ()/{} - переходить по отдельным частям текста 
